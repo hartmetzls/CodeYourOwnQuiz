@@ -1,5 +1,5 @@
 #I broke my code up into 4 procedures to meet this criteria: "No functions are longer than 18 lines of code"
-
+#I saved 0 as the value of min_guesses per the instructions in my first review.
 
 def quiz(): #Contains the starting paragraphs, calls a function to set the answer list and paragraph, lets user set the
     #number of guesses they get, calls a function to check the answers and outputs those results.
@@ -45,28 +45,29 @@ def set_paragraph_and_answers(easy_paragraph, medium_paragraph, hard_paragraph):
 def check_answers_win_lose(answer_list, paragraph, num_guesses): #inputs are the answers, paragraph, and number of
     #guesses; this procedure iterates through each answer and calls a function to check the user's answers and will
     #output text indicating whether or not the user answered everything correctly
+    min_guesses = 0
     for i in range(1, len(answer_list) + 1): #Iterates starting from 1, so i can be used as the integer in the middle
         # of each blank in the fill_blanks function.
         num_guesses_remaining = int(num_guesses)
-        while num_guesses_remaining:
-            num_guesses_remaining, paragraph = fill_blanks(answer_list, i, num_guesses_remaining, paragraph)
+        while num_guesses_remaining != min_guesses:
+            num_guesses_remaining, paragraph = fill_blanks(answer_list, i, num_guesses_remaining, paragraph, min_guesses)
     if "___" in paragraph:
         return "Study more, then try again!"
     else:
         return "You win! You know all the things."
 
 
-def fill_blanks(answer_list, i, num_guesses_remaining, paragraph): #inputs are the answers, i, remaining guesses, and
-    #the paragraph; checks whether or not the user's answer is correct; outputs remaining guesses and the paragraph
+def fill_blanks(answer_list, i, num_guesses_remaining, paragraph, min_guesses): #inputs are the answers, i, remaining guesses, and
+    #the paragraph, min guesses (0); checks whether or not the user's answer is correct; outputs remaining guesses and the paragraph
     answer = raw_input("What should be substituted for ___" + str(i) + "___? ")
     if answer == answer_list[i - 1]:
         paragraph = paragraph.replace("___" + str(i) + "___", answer)
         print "Correct!"
         print paragraph
-        num_guesses_remaining = 0 #Resets so we can go on to the next question.
+        num_guesses_remaining = min_guesses #Resets so we can go on to the next question.
     else:
         num_guesses_remaining = num_guesses_remaining - 1
-        if num_guesses_remaining != 0:
+        if num_guesses_remaining != min_guesses:
             print "Try again :)"
         else:
             print "That was your last guess."

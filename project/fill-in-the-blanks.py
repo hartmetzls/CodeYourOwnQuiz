@@ -26,12 +26,18 @@ def set_paragraph_and_answers(easy_paragraph, medium_paragraph, hard_paragraph):
     #lets the user set the difficulty, outputs the answer list and the correct paragraph.
     difficulty = raw_input("Select a game difficulty by typing it in! \n "
                            "Possible choices include easy, medium, and hard. ")
+    valid_difficulties = ["easy","medium","hard"]
+    #when I first submitted this project, it was suggested that I avoid a sudden exit of the program if an invalid
+    #difficulty was entered. I realize there might be a more elegant solution using else, but the ones I tried
+    #ultimately ended in errors. That is why I established the valid difficulties list and the while loop below.
+    while difficulty not in valid_difficulties:
+        print "Invalid option."
+        difficulty = raw_input("Select a game difficulty by typing it in! \n "
+                               "Possible choices include easy, medium, and hard. ")
     if difficulty == "easy":
-        print "You newb! Jk, it's cool, you're learning."
         paragraph = easy_paragraph
         answer_list = ["function", "arguments", "None", "list"]
     if difficulty == "medium":
-        print "You have chosen medium."
         paragraph = medium_paragraph
         answer_list = ["Bandwidth", "mega", "million", "two"]
     if difficulty == "hard":
